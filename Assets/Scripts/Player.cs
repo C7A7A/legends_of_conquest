@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
 
     public string transitionName;
 
+    private Vector3 bottomLeftEdge;
+    private Vector3 topRightEdge;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,5 +48,17 @@ public class Player : MonoBehaviour
             playerAnimator.SetFloat("lastX", horizontalMovement);
             playerAnimator.SetFloat("lastY", verticalMovement);
         }
+
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, bottomLeftEdge.x, topRightEdge.x),
+            Mathf.Clamp(transform.position.y, bottomLeftEdge.y, topRightEdge.y),
+            Mathf.Clamp(transform.position.z, bottomLeftEdge.z, topRightEdge.z)
+        );
+    }
+
+    public void SetTilemapLimit(Vector3 bottomEdgeToSet, Vector3 topEdgeToSet)
+    {
+        bottomLeftEdge = bottomEdgeToSet;
+        topRightEdge = topEdgeToSet;
     }
 }

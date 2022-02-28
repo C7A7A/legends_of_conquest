@@ -28,6 +28,16 @@ public class AreaExit : MonoBehaviour
         }
 
         Player.instance.transitionName = transitionAreaName;
+
+        MenuManager.instance.FadeImage();
+
+        StartCoroutine(LoadSceneCoroutine());
+    }
+
+    IEnumerator LoadSceneCoroutine()
+    {
+        yield return new WaitForSeconds(1.0f);
+
         SceneManager.LoadScene(sceneToLoad);
     }
 }
