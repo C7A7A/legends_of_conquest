@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public static Player instance;
 
     [SerializeField] float moveSpeed = 7.0f;
+    public bool IsMovementActive = true;
 
     [SerializeField] Rigidbody2D playerRigidBody;
     [SerializeField] Animator playerAnimator;
@@ -38,15 +39,21 @@ public class Player : MonoBehaviour
         float horizontalMovement = Input.GetAxisRaw("Horizontal");
         float verticalMovement = Input.GetAxisRaw("Vertical");
 
-        playerRigidBody.velocity = new Vector2(horizontalMovement, verticalMovement) * moveSpeed;
+        if (!IsMovementActive) {
+            playerRigidBody.velocity = new Vector2(0.0f, 0.0f);
+        } else {
+            playerRigidBody.velocity = new Vector2(horizontalMovement, verticalMovement) * moveSpeed;
+        }
 
         playerAnimator.SetFloat("movementX", playerRigidBody.velocity.x);
         playerAnimator.SetFloat("movementY", playerRigidBody.velocity.y);
 
         if (horizontalMovement == 1 || horizontalMovement == -1 || verticalMovement == 1 || verticalMovement == -1)
         {
-            playerAnimator.SetFloat("lastX", horizontalMovement);
-            playerAnimator.SetFloat("lastY", verticalMovement);
+            if (IsMovementActive) {
+                playerAnimator.SetFloat("lastX", horizontalMovement);
+                playerAnimator.SetFloat("lastY", verticalMovement);
+            }
         }
 
         transform.position = new Vector3(
@@ -56,8 +63,7 @@ public class Player : MonoBehaviour
         );
     }
 
-    public void SetTilemapLimit(Vector3 bottomEdgeToSet, Vector3 topEdgeToSet)
-    {
+    public void SetTilemapLimit(Vector3 bottomEdgeToSet, Vector3 topEdgeToSet) {
         bottomLeftEdge = bottomEdgeToSet;
         topRightEdge = topEdgeToSet;
     }
