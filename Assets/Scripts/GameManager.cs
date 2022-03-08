@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerStats[] playerStats;
 
+    public bool gameMenuOpened = false, dialogBoxOpened = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (gameMenuOpened || dialogBoxOpened ) {
+            Player.instance.IsMovementActive = false;
+        } else {
+            Player.instance.IsMovementActive = true;
+        }
     }
 }
