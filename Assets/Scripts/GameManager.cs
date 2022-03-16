@@ -33,4 +33,8 @@ public class GameManager : MonoBehaviour
             Player.instance.IsMovementActive = true;
         }
     }
+
+    public PlayerStats[] GetPlayerStats() {
+        return playerStats;
+    }
 }

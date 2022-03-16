@@ -1,25 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] string playerName;
+    public string playerName;
+
+    public Sprite characterImage;
 
     [SerializeField] int maxLevel = 50;
-    [SerializeField] int playerLevel = 1;
-    [SerializeField] int currentXP;
-    [SerializeField] int[] xpForNextLevel;
-    [SerializeField] int baseLevelXP = 100;
-    
-    [SerializeField] int maxHP = 100; 
-    [SerializeField] int currentHP;
-    
-    [SerializeField] int maxMana = 30;
-    [SerializeField] int currentMana;
+    public int playerLevel = 1;
+    public int currentXP;
+    public int[] xpForNextLevel;
+    // [SerializeField] int baseLevelXP = 100;
 
-    [SerializeField] int dexterity;
-    [SerializeField] int defence;
+    public int maxHP = 100;
+    public int currentHP;
+
+    public int maxMana = 30;
+    public int currentMana;
+
+    public int dexterity;
+    public int defence;
 
     // Start is called before the first frame update
     void Start()
