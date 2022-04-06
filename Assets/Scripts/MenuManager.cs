@@ -20,9 +20,18 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Image[] characterImage;
     [SerializeField] GameObject[] characterPanel;
 
-    [SerializeField] TextMeshProUGUI statName, statHP, statMana, statDex, statDef;
+    [SerializeField] TextMeshProUGUI statName, statHP, statMana, statDex, statDef, statEquiptWeapon, statEquiptArmor, statWeaponPower, statArmorDefence;
     [SerializeField] Image characterStatImage;
 
+    [SerializeField] GameObject itemSlotContainer;
+    [SerializeField] RectTransform itemSlotContainerParent;
+
+    public TextMeshProUGUI itemName, itemDescription;
+
+    public ItemsManager activeItem;
+
+    [SerializeField] GameObject characterChoicePanel;
+    [SerializeField] TextMeshProUGUI[] itemsCharacterChoiceNames;
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +49,8 @@ public class MenuManager : MonoBehaviour
                 menu.SetActive(false);
                 GameManager.instance.gameMenuOpened = false;
             } else {
-                menu.SetActive(true);
                 UpdateStats();
+                menu.SetActive(true);
                 GameManager.instance.gameMenuOpened = true;
             }
         }
@@ -89,6 +98,66 @@ public class MenuManager : MonoBehaviour
         statDef.text = playerSelected.defence.ToString();
 
         characterStatImage.sprite = playerSelected.characterImage;
+
+        statEquiptWeapon.text = playerSelected.equiptWeaponName;
+        statEquiptArmor.text = playerSelected.equiptArmorName;
+
+        statWeaponPower.text = playerSelected.weaponPower.ToString();
+        statArmorDefence.text = playerSelected.armorDefence.ToString();
+    }
+
+    public void UpdateItemsInventory() {
+        foreach (RectTransform itemSlot in itemSlotContainerParent) {
+            Destroy(itemSlot.gameObject);
+        }
+        
+        List<ItemsManager> itemsList = Inventory.instance.GetItemsList();
+
+        foreach (ItemsManager item in itemsList) {
+            RectTransform itemSlot = Instantiate(itemSlotContainer, itemSlotContainerParent).GetComponent<RectTransform>();
+
+            Image itemImage = itemSlot.Find("ItemImage").GetComponent<Image>();
+            itemImage.sprite = item.itemsImage;
+
+            TextMeshProUGUI itemAmountText = itemSlot.Find("ItemAmountText").GetComponent<TextMeshProUGUI>();
+
+            if (item.amount > 1) {
+                itemAmountText.text = item.amount.ToString();
+            } else {
+                itemAmountText.text = "";
+            }
+
+            itemSlot.GetComponent<ItemButton>().itemOnButton = item;
+        }
+    }
+
+    public void DiscardItem() {
+        Inventory.instance.RemoveItem(activeItem);
+        UpdateItemsInventory();
+    }
+
+    public void UseItem(int selectedCharacter) {
+        activeItem.UseItem(selectedCharacter);
+        OpenCharacterChoicePanel();
+        DiscardItem();
+    }
+
+    public void OpenCharacterChoicePanel() {
+        characterChoicePanel.SetActive(true);
+
+        if (activeItem) {
+            for (int i = 0; i < playerStats.Length; i++) {
+                PlayerStats activePlayer = GameManager.instance.GetPlayerStats()[i];
+                itemsCharacterChoiceNames[i].text = activePlayer.playerName;
+
+                bool activePlayerAvailable = activePlayer.gameObject.activeInHierarchy;
+                itemsCharacterChoiceNames[i].transform.parent.gameObject.SetActive(activePlayerAvailable);
+            }
+        }
+    }
+
+    public void CloseCharacterChoicePanel() {
+        characterChoicePanel.SetActive(false);
     }
 
     public void QuitGame() {

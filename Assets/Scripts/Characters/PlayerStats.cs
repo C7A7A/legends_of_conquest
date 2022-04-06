@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats instance;
+
     public string playerName;
 
     public Sprite characterImage;
@@ -24,9 +26,19 @@ public class PlayerStats : MonoBehaviour
     public int dexterity;
     public int defence;
 
+    public string equiptWeaponName;
+    public string equiptArmorName;
+
+    public int weaponPower;
+    public int armorDefence;
+
+    public ItemsManager equiptWeapon, equiptArmor;
+
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+
         xpForNextLevel = new int[maxLevel];
 
         for (int i = 0; i < maxLevel; i++) {
@@ -62,5 +74,31 @@ public class PlayerStats : MonoBehaviour
             maxMana = (int)(maxMana * 1.08f);
             currentMana = maxMana;
         }
+    }
+
+    public void AddMana(int amount) {
+        currentMana += amount;
+        if (currentMana > maxMana) {
+            currentMana = maxMana;
+        }
+    }
+
+    public void AddHP(int amount) {
+        currentHP += amount;
+        if (currentHP > maxHP) {
+            currentHP = maxHP;
+        }
+    }
+
+    public void EquipWeapon(ItemsManager weapon) {
+        equiptWeapon = weapon;
+        equiptWeaponName = weapon.itemName;
+        weaponPower = weapon.weaponDexterity;
+    }
+
+    public void EquipArmor(ItemsManager armor) {
+        equiptArmor = armor;
+        equiptArmorName = armor.itemName;
+        armorDefence = armor.armorDefence;
     }
 }
