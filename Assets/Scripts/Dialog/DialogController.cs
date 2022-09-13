@@ -16,6 +16,10 @@ public class DialogController : MonoBehaviour
 
     private bool dialogJustStarted;
 
+    private string questToMark;
+    private bool markQuestComplete;
+    private bool shouldMarkQuest;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +35,20 @@ public class DialogController : MonoBehaviour
                 
                 if (!dialogJustStarted) {
                     currentSentence++;
-
+                    
                     if (currentSentence >= dialogSentences.Length) {
                         dialogBox.SetActive(false);
                         GameManager.instance.dialogBoxOpened = false;
+
+                        if (shouldMarkQuest) {
+                            shouldMarkQuest = false;
+                            if (markQuestComplete) {
+                                QuestManager.instance.MarkQuestComplete(questToMark);
+                            } else {
+                                QuestManager.instance.MarkQuestInComplete(questToMark);
+                            }
+                        }
+
                     } else {
                         CheckForCharacterName();
                         dialogText.text = dialogSentences[currentSentence];
@@ -69,5 +83,11 @@ public class DialogController : MonoBehaviour
             nameText.text = dialogSentences[currentSentence].Replace("#", "");
             currentSentence++;
         }
+    }
+
+    public void ActivateQuestAtEnd(string questName, bool markComplete) {
+        questToMark = questName;
+        markQuestComplete = markComplete;
+        shouldMarkQuest = true;
     }
 }

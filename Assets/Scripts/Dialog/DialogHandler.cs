@@ -7,6 +7,10 @@ public class DialogHandler : MonoBehaviour
     public string[] sentences;
     private bool canActivateBox;
 
+    [SerializeField] bool shouldActivateQuest;
+    [SerializeField] string questToMark;
+    [SerializeField] bool markAsComplete;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +22,14 @@ public class DialogHandler : MonoBehaviour
     {
         if (canActivateBox && Input.GetButtonUp("Fire1") && !DialogController.instance.IsDialogBoxActive()) {
             DialogController.instance.ActivateDialog(sentences);
+
+            // quick fix -> Dialog Panel doesn't close without it.
+            // TODO: You need too click twice to go to second sentence.
+            canActivateBox = false;
+
+            if (shouldActivateQuest) {
+                DialogController.instance.ActivateQuestAtEnd(questToMark, markAsComplete);
+            }
         }
     }
 
