@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3241917731811469954}
   - component: {fileID: 3241917731811469955}
   - component: {fileID: 3241917731811469952}
+  - component: {fileID: 7585960455328952641}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -47,6 +48,8 @@ MonoBehaviour:
   playerStats: []
   gameMenuOpened: 0
   dialogBoxOpened: 0
+  shopOpened: 0
+  currentGold: 0
 --- !u!114 &3241917731811469952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,5 +60,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86eecc417321cde44becde0f79879333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7585960455328952641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241917731811469965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd4bef7547b98341aa64a030e5375d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

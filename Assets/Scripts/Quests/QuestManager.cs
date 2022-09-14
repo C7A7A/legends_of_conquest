@@ -26,6 +26,16 @@ public class QuestManager : MonoBehaviour
             MarkQuestComplete("Steal The Gem");
             MarkQuestInComplete("Take Monster Soul");
         }
+
+        if (Input.GetKeyDown(KeyCode.I)) {
+            Debug.Log("Data has been saved");
+            SaveQuestData();
+        }
+
+        if (Input.GetKeyDown(KeyCode.O)) {
+            Debug.Log("Data has been loaded");
+            LoadQuestData();
+        }
     }
 
     public int GetQuestNumber(string questToFind) {
@@ -74,6 +84,35 @@ public class QuestManager : MonoBehaviour
         if (questObjects.Length > 0) {
             foreach (QuestObject questObject in questObjects) {
                 questObject.CheckForCompletion();
+            }
+        }
+    }
+
+    public void SaveQuestData() {
+        for (int i = 0; i < questNames.Length; i++) {
+            string keyToUse = "QuestMarker_" + questNames[i];
+
+            if (questMarkersCompleted[i]) {
+                PlayerPrefs.SetInt(keyToUse, 1);
+            } else {
+                PlayerPrefs.SetInt(keyToUse, 0);
+            }
+        }
+    }
+
+    public void LoadQuestData() {
+        for (int i = 0; i < questNames.Length; i++) {
+            int valueToSet = 0;
+            string keyToUse = "QuestMarker_" + questNames[i];
+
+            if (PlayerPrefs.HasKey(keyToUse)) {
+                valueToSet = PlayerPrefs.GetInt(keyToUse);
+            }
+
+            if (valueToSet == 0) {
+                questMarkersCompleted[i] = false;
+            } else if (valueToSet == 1) {
+                questMarkersCompleted[i] = true;
             }
         }
     }
