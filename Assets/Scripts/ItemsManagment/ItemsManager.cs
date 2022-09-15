@@ -68,6 +68,9 @@ public class ItemsManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
             Inventory.instance.AddItems(this);
+
+            AudioManager.instance.PlaySFX(5);
+
             SelfDestroy();
         }   
     }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3241917731811469955}
   - component: {fileID: 3241917731811469952}
   - component: {fileID: 7585960455328952641}
+  - component: {fileID: 1068586805}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -74,3 +75,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd4bef7547b98341aa64a030e5375d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemsAvailable:
+  - {fileID: 3730450922564014436, guid: 1e8eb6a1ece780043ac6f843337d4245, type: 3}
+  - {fileID: 3520785709701016041, guid: a16bd5dcc486f684097e60d5f6cbb617, type: 3}
+  - {fileID: 8512494650796985702, guid: 23c335fa581646843a9b00de9fc6452d, type: 3}
+  - {fileID: 6352034286067088847, guid: 8b428dc02ea281a43804b232dde214fe, type: 3}
+  - {fileID: 5825900287660110107, guid: ca3ac1fb6df8184468425f90d4570529, type: 3}
+  - {fileID: 7333192364471537825, guid: 80136b001f47a77478c427a713e1f5d9, type: 3}
+--- !u!114 &1068586805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241917731811469965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501977fd9daeabe4db4c1775caf5d0bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questNames:
+  - 
+  - Defeat Dragon
+  - Enter Cave
+  - Steal The Gem
+  - Take Monster Soul
+  questMarkersCompleted: 
