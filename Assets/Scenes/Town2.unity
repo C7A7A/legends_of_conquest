@@ -2875,102 +2875,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 33476919, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 411792792, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 799783792, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1147988063, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1147988063, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1545868883, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1564410645, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1755588673, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1755588673, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2021982619, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2021982619, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: buyPanel
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: shopMenu
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: sellPanel
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: buyItemName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: buyItemValue
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: sellItemName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: sellItemValue
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: currentGoldText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: buyItemDescription
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: sellItemDescription
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: itemSlotBuyContainerParent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593350590393826622, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: itemSlotSellContainerParent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8472527733913924866, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8472527733913924867, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3058,14 +2962,6 @@ PrefabInstance:
     - target: {fileID: 8472527733913924879, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8472527734661226213, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8472527734661226214, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0303eba1aa86f044189cdf47ecdf2c9b, type: 3}
