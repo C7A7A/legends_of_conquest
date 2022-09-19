@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerStats[] playerStats;
 
-    public bool gameMenuOpened = false, dialogBoxOpened = false, shopOpened = false;
+    public bool gameMenuOpened = false, dialogBoxOpened = false, shopOpened = false, battleIsActive = false;
 
     public int currentGold;
 
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameMenuOpened || dialogBoxOpened || shopOpened) {
+        if (gameMenuOpened || dialogBoxOpened || shopOpened || battleIsActive) {
             Player.instance.IsMovementActive = false;
         } else {
             Player.instance.IsMovementActive = true;
