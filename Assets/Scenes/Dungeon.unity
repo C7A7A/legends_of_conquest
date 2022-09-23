@@ -2549,6 +2549,24 @@ MonoBehaviour:
     movePower: 40
     manaCost: 500
     EffectToUse: {fileID: 9076722013043785124, guid: 1d5ea9e33f2df134b994d4706602db69, type: 3}
+  attackParticle: {fileID: 4724688953832219412, guid: d3417df6c50a2d8478ec1d90e3e06515, type: 3}
+  damageAmountText: {fileID: -3325448715534550226, guid: 47827512a637ddc4bac25271b4603b98, type: 3}
+  playersBattleStats:
+  - {fileID: 1432582591}
+  - {fileID: 1896663547}
+  - {fileID: 1557467084}
+  playerNamesText:
+  - {fileID: 1819213480}
+  - {fileID: 319830657}
+  - {fileID: 601749449}
+  HPSliders:
+  - {fileID: 1547661125}
+  - {fileID: 378567566}
+  - {fileID: 1061757835}
+  manaSliders:
+  - {fileID: 862525844}
+  - {fileID: 1570870148}
+  - {fileID: 2133415009}
 --- !u!1 &1448399190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3105,7 +3123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1557467085}
   m_Layer: 0
-  m_Name: Player 1 (2)
+  m_Name: Player 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3981,7 +3999,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1896663548}
   m_Layer: 0
-  m_Name: Player 1 (1)
+  m_Name: Player 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4468,6 +4486,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5681251993034605830, guid: 12477ddae5da7ee4a8b97de979148ace, type: 3}
+      propertyPath: m_Volume
+      value: 0.164
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12477ddae5da7ee4a8b97de979148ace, type: 3}
 --- !u!1001 &2120413863
@@ -4477,6 +4499,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 368885977, guid: f13ce18cf90384e459d83d6de8495aa9, type: 3}
+      propertyPath: maxHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 368885977, guid: f13ce18cf90384e459d83d6de8495aa9, type: 3}
+      propertyPath: currentHP
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 368885977, guid: f13ce18cf90384e459d83d6de8495aa9, type: 3}
+      propertyPath: currentMana
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3210211560699466380, guid: f13ce18cf90384e459d83d6de8495aa9, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -4806,9 +4840,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1448136110751371975, guid: 9ea2f501b41cd5b4bbbd8ee307385252, type: 3}
+      propertyPath: currentHP
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448136110751371975, guid: 9ea2f501b41cd5b4bbbd8ee307385252, type: 3}
+      propertyPath: currentMana
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4076925864470937744, guid: 9ea2f501b41cd5b4bbbd8ee307385252, type: 3}
       propertyPath: m_Name
       value: DarkKnight
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076925864470937744, guid: 9ea2f501b41cd5b4bbbd8ee307385252, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4076925864470937746, guid: 9ea2f501b41cd5b4bbbd8ee307385252, type: 3}
       propertyPath: m_RootOrder
@@ -4985,6 +5031,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6413841763208265347, guid: 4c507d521e14d3b488ae90993515e08c, type: 3}
+      propertyPath: maxHP
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6413841763208265347, guid: 4c507d521e14d3b488ae90993515e08c, type: 3}
+      propertyPath: currentHP
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 8470845928733093076, guid: 4c507d521e14d3b488ae90993515e08c, type: 3}
       propertyPath: m_Name
       value: Skeleton
