@@ -30,6 +30,25 @@ public class BattleManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] playerNamesText;
     [SerializeField] Slider[] HPSliders, manaSliders;
 
+    [SerializeField] GameObject enemyTargetPanel;
+    [SerializeField] BattleTargetButtons[] targetButtons;
+
+    public GameObject magicChoicePanel;
+    [SerializeField] BattleMagicButtons[] magicButtons;
+
+    public BattleNotifications battleNotice;
+
+    [SerializeField] float chanceToRunAway = 0.5f;
+
+    public GameObject itemsToUseMenu;
+    [SerializeField] ItemsManager selectedItem;
+    [SerializeField] GameObject itemSlotContainer;
+    [SerializeField] Transform itemSlotContainerParent;
+    [SerializeField] TextMeshProUGUI itemName, itemDescription;
+
+    [SerializeField] GameObject characterChoicePanel;
+    [SerializeField] TextMeshProUGUI[] playerNames;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -222,21 +241,11 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i < battleMovesList.Length; i++) {
             if (battleMovesList[i].moveName == activeCharacters[currentTurn].AttacksAvailable()[selectedAttack]) {
-                Instantiate(
-                    battleMovesList[i].EffectToUse,
-                    activeCharacters[selectedPlayerToAttack].transform.position,
-                    activeCharacters[selectedPlayerToAttack].transform.rotation
-                );
-
-                movePower = battleMovesList[i].movePower;
+                movePower = GetMovePowerAndInstantiateEffect(selectedPlayerToAttack, i);
             }
         }
 
-        Instantiate(
-            attackParticle,
-            activeCharacters[currentTurn].transform.position,
-            activeCharacters[currentTurn].transform.rotation
-        );
+        InstantiateEffectOnAttackingCharacter();
 
         DealDamage(selectedPlayerToAttack, movePower);
 
@@ -298,5 +307,166 @@ public class BattleManager : MonoBehaviour
                 playersBattleStats[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    // Player attacking methods
+
+    public void PlayerAttack(string moveName, int target) {
+        int movePower = 0;
+
+        for (int i = 0; i < battleMovesList.Length; i++) {
+            if (battleMovesList[i].moveName == moveName) {
+                movePower = GetMovePowerAndInstantiateEffect(target, i);
+            }
+        }
+
+        InstantiateEffectOnAttackingCharacter();
+        DealDamage(target, movePower);
+
+        NextTurn();
+
+        enemyTargetPanel.SetActive(false);
+    }
+
+    public void OpenTargetMenu(string moveName) {
+        enemyTargetPanel.SetActive(true);
+
+        List<int> Enemies = new List<int>();
+
+        for (int i = 0; i < activeCharacters.Count; i++) {
+            if (!activeCharacters[i].IsPlayer()) {
+                Enemies.Add(i);
+            }
+        }
+
+        for (int i = 0; i < targetButtons.Length; i++) {
+            if (Enemies.Count > i) {
+                targetButtons[i].gameObject.SetActive(true);
+                targetButtons[i].moveName = moveName;
+                targetButtons[i].activeBattleTarget = Enemies[i];
+                targetButtons[i].targetName.text = activeCharacters[Enemies[i]].characterName;
+            }
+        }
+    }
+
+    private void InstantiateEffectOnAttackingCharacter() {
+        Instantiate(
+                    attackParticle,
+                    activeCharacters[currentTurn].transform.position,
+                    activeCharacters[currentTurn].transform.rotation
+                );
+    }
+
+    private int GetMovePowerAndInstantiateEffect(int target, int i) {
+        int movePower;
+        Instantiate(
+               battleMovesList[i].EffectToUse,
+               activeCharacters[target].transform.position,
+               activeCharacters[target].transform.rotation
+           );
+
+        movePower = battleMovesList[i].movePower;
+        return movePower;
+    }
+
+    public void OpenMagicPanel() {
+        magicChoicePanel.SetActive(true);
+
+        for (int i = 0; i < magicButtons.Length; i++) {
+            if (activeCharacters[currentTurn].AttacksAvailable().Length > i) {
+                magicButtons[i].gameObject.SetActive(true);
+                magicButtons[i].spellName = GetCurrentCharacter().AttacksAvailable()[i];
+                magicButtons[i].spellNameText.text = magicButtons[i].spellName;
+                for (int j = 0; j < battleMovesList.Length; j++) {
+                    if (magicButtons[i].spellName == battleMovesList[j].moveName) {
+                        magicButtons[i].spellCost = battleMovesList[j].manaCost;
+                        magicButtons[i].spellCostText.text = $"cost: {battleMovesList[j].manaCost}";
+                    }
+                }
+            } else {
+                magicButtons[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public BattleCharacters GetCurrentCharacter() {
+        return activeCharacters[currentTurn];
+    }
+
+    public void RunAway() {
+        if (Random.value > chanceToRunAway) {
+            isBattleActive = false;
+            battleScene.SetActive(false);
+        } else {
+            NextTurn();
+            battleNotice.SetText("You were unable to escape");
+            battleNotice.Activate();
+        }
+    }
+
+    public void UpdateItemsInInventory() {
+        itemsToUseMenu.SetActive(true);
+
+        foreach (RectTransform itemSlot in itemSlotContainerParent) {
+            Destroy(itemSlot.gameObject);
+        }
+
+        List<ItemsManager> itemsList = Inventory.instance.GetItemsList();
+
+        foreach (ItemsManager item in itemsList) {
+            RectTransform itemSlot = Instantiate(itemSlotContainer, itemSlotContainerParent).GetComponent<RectTransform>();
+
+            Image itemImage = itemSlot.Find("ItemImage").GetComponent<Image>();
+            itemImage.sprite = item.itemsImage;
+
+            TextMeshProUGUI itemAmountText = itemSlot.Find("ItemAmountText").GetComponent<TextMeshProUGUI>();
+
+            if (item.amount > 1) {
+                itemAmountText.text = item.amount.ToString();
+            } else {
+                itemAmountText.text = "";
+            }
+
+            itemSlot.GetComponent<ItemButton>().itemOnButton = item;
+        }
+    }
+
+    public void SelectedItemToUse(ItemsManager itemToUse) {
+        selectedItem = itemToUse;
+        itemName.text = selectedItem.itemName;
+        itemDescription.text = selectedItem.itemDescription;
+    }
+
+    public void OpenCharacterMenu() {
+        if (selectedItem) {
+            characterChoicePanel.SetActive(true);
+
+            for (int i = 0; i < activeCharacters.Count; i++) {
+                if (activeCharacters[i].IsPlayer()) {
+                    PlayerStats activePlayer = GameManager.instance.GetPlayerStats()[i];
+
+                    playerNames[i].text = activePlayer.playerName;
+
+                    bool activePlayerInHierarchy = activePlayer.gameObject.activeInHierarchy;
+                    playerNames[i].transform.parent.gameObject.SetActive(activePlayerInHierarchy);
+                }
+            }
+        } else {
+            Debug.Log("No item selected", this.gameObject);
+        }
+    }
+
+    public void UseItemButton(int selectedPlayer) {
+        activeCharacters[selectedPlayer].UseItem(selectedItem);
+        Inventory.instance.RemoveItem(selectedItem);
+
+        UpdatePlayerStats();
+        CloseCharacterChoice();
+        UpdateItemsInInventory();
+    }
+
+    public void CloseCharacterChoice() {
+        characterChoicePanel.SetActive(false);
+        itemsToUseMenu.SetActive(false);
     }
 }

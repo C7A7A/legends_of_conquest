@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4664092952837174844
+--- !u!1 &948310768215290965
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4664092952837174845}
-  - component: {fileID: 4664092952837174842}
-  - component: {fileID: 4664092952837174843}
+  - component: {fileID: 948310768215290964}
+  - component: {fileID: 948310768215290963}
+  - component: {fileID: 948310768215290961}
   m_Layer: 0
-  m_Name: DarkKnight
+  m_Name: MageBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4664092952837174845
+--- !u!4 &948310768215290964
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4664092952837174844}
+  m_GameObject: {fileID: 948310768215290965}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.32, y: 0.35, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4664092952837174842
+--- !u!212 &948310768215290963
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4664092952837174844}
+  m_GameObject: {fileID: 948310768215290965}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: -1271290709
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4314272992169362088, guid: 8070e685a016c964dbcde4deabfb6c96, type: 3}
+  m_Sprite: {fileID: -1795555410212160158, guid: aaca2a24e3042ab4190059c5e19783a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83,27 +83,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4664092952837174843
+--- !u!114 &948310768215290961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4664092952837174844}
+  m_GameObject: {fileID: 948310768215290965}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccacb642298898d43b7cf2fa979a802c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
-  attacksAvailable: []
-  characterName: DarkKnight
-  currentHP: 0
-  maxHP: 0
-  currentMana: 0
-  maxMana: 0
-  dexterity: 0
-  defence: 0
-  weaponPower: 0
+  isPlayer: 0
+  attacksAvailable:
+  - MageBullet
+  - Acid
+  - Tentacle
+  - Sparkling
+  - Flameball
+  - Slash
+  characterName: MageBoss
+  currentHP: 450
+  maxHP: 450
+  currentMana: 1000
+  maxMana: 1000
+  dexterity: 25
+  defence: 1
+  weaponPower: 150
   armorDefence: 0
   isDead: 0

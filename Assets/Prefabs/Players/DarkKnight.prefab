@@ -142,13 +142,13 @@ MonoBehaviour:
   xpForNextLevel: 
   maxHP: 250
   currentHP: 250
-  maxMana: 15
-  currentMana: 15
+  maxMana: 1500
+  currentMana: 1500
   dexterity: 40
   defence: 40
   equiptWeaponName: 
   equiptArmorName: 
-  weaponPower: 0
+  weaponPower: 1000
   armorDefence: 0
   equiptWeapon: {fileID: 0}
   equiptArmor: {fileID: 0}
