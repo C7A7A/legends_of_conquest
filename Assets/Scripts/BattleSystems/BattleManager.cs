@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class BattleManager : MonoBehaviour
@@ -49,6 +50,14 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject characterChoicePanel;
     [SerializeField] TextMeshProUGUI[] playerNames;
 
+    [SerializeField] string gameOverScene;
+
+    private bool runAway;
+    public int XPRewardAmount;
+    public ItemsManager[] itemsReward;
+
+    private bool canRun;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +68,7 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.B)) {
-            StartBattle(new string[] { "GreatShadow", "Mage", "MageBoss", "Shadow" });
+            StartBattle(new string[] { "GreatShadow", "Mage", "MageBoss", "Shadow" }, true);
         }
 
         if (Input.GetKeyDown(KeyCode.N)) {
@@ -82,8 +91,9 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void StartBattle(string[] enemiesToSpawn) {
+    public void StartBattle(string[] enemiesToSpawn, bool canRunAway) {
         if (!isBattleActive) {
+            canRun = canRunAway;
             SetUpBattle();
             AddPlayers();
             AddEnemies(enemiesToSpawn);
@@ -99,6 +109,7 @@ public class BattleManager : MonoBehaviour
             if (enemiesToSpawn[i] != "") {
                 for (int j = 0; j < enemyPrefabs.Length; j++) {
                     if (enemyPrefabs[j].characterName == enemiesToSpawn[i]) {
+
                         BattleCharacters newEnemy = Instantiate(
                             enemyPrefabs[j],
                             enemyPositions[i].position,
@@ -184,7 +195,11 @@ public class BattleManager : MonoBehaviour
             }
 
             if (activeCharacters[i].currentHP == 0) {
-                // kill character
+                if (activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead) {
+                    activeCharacters[i].KillPlayer();
+                } else if (!activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead) {
+                    activeCharacters[i].KillEnemy();
+                }
             } else {
                 if (activeCharacters[i].IsPlayer()) {
                     allPlayersAreDead = false;
@@ -196,14 +211,10 @@ public class BattleManager : MonoBehaviour
 
         if (allEnemiesAreDead || allPlayersAreDead) {
             if (allEnemiesAreDead) {
-                print("You won");
+                StartCoroutine(EndBattleCoroutine());
             } else if (allPlayersAreDead) {
-                print("You lost");
+                StartCoroutine(GameOverCouroutine());
             }
-
-            battleScene.SetActive(false);
-            GameManager.instance.battleIsActive = false;
-            isBattleActive = false;
         } else {
             while (activeCharacters[currentTurn].currentHP == 0) {
                 currentTurn++;
@@ -340,11 +351,13 @@ public class BattleManager : MonoBehaviour
         }
 
         for (int i = 0; i < targetButtons.Length; i++) {
-            if (Enemies.Count > i) {
+            if (Enemies.Count > i && activeCharacters[Enemies[i]].currentHP > 0) {
                 targetButtons[i].gameObject.SetActive(true);
                 targetButtons[i].moveName = moveName;
                 targetButtons[i].activeBattleTarget = Enemies[i];
                 targetButtons[i].targetName.text = activeCharacters[Enemies[i]].characterName;
+            } else {
+                targetButtons[i].gameObject.SetActive(false);
             }
         }
     }
@@ -394,13 +407,15 @@ public class BattleManager : MonoBehaviour
     }
 
     public void RunAway() {
-        if (Random.value > chanceToRunAway) {
-            isBattleActive = false;
-            battleScene.SetActive(false);
-        } else {
-            NextTurn();
-            battleNotice.SetText("You were unable to escape");
-            battleNotice.Activate();
+        if (canRun) {
+            if (Random.value > chanceToRunAway) {
+                runAway = true;
+                StartCoroutine(EndBattleCoroutine());
+            } else {
+                NextTurn();
+                battleNotice.SetText("You were unable to escape");
+                battleNotice.Activate();
+            }
         }
     }
 
@@ -468,5 +483,55 @@ public class BattleManager : MonoBehaviour
     public void CloseCharacterChoice() {
         characterChoicePanel.SetActive(false);
         itemsToUseMenu.SetActive(false);
+    }
+
+    public IEnumerator EndBattleCoroutine() {
+        isBattleActive = false;
+
+        UIButtonHolder.SetActive(false);
+        enemyTargetPanel.SetActive(false);
+        magicChoicePanel.SetActive(false);
+
+        if (!runAway) {
+            battleNotice.SetText("You won!");
+            battleNotice.Activate();
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        foreach (BattleCharacters playerInBattle in activeCharacters) {
+            if (playerInBattle.IsPlayer()) {
+                foreach (PlayerStats playerWithStats in GameManager.instance.GetPlayerStats()) {
+                    if (playerInBattle.characterName == playerWithStats.playerName) {
+                        playerWithStats.currentHP = playerInBattle.currentHP;
+                        playerWithStats.currentMana = playerInBattle.currentMana;
+                    }
+                }
+            }
+
+            Destroy(playerInBattle.gameObject);
+        }
+
+        battleScene.SetActive(false);
+        activeCharacters.Clear();
+
+        if (runAway) {
+            GameManager.instance.battleIsActive = false;
+            runAway = false;
+        } else {
+            BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward);
+        }
+
+        currentTurn = 0;
+    }
+
+    public IEnumerator GameOverCouroutine() {
+        battleNotice.SetText("You lost!");
+        battleNotice.Activate();
+
+        yield return new WaitForSeconds(3f);
+
+        isBattleActive = false;
+        SceneManager.LoadScene(gameOverScene);
     }
 }

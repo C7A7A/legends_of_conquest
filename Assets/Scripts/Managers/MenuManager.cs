@@ -176,6 +176,11 @@ public class MenuManager : MonoBehaviour
         animator.SetTrigger("StartFading");
     }
 
+    public void FadeOut() {
+        animator = imageToFade.GetComponent<Animator>();
+        animator.SetTrigger("EndFading");
+    }
+
     private void DeactivatedCharacterPanels() {
         for (int i = 0; i < characterPanel.Length; i++) {
             characterPanel[i].SetActive(false);

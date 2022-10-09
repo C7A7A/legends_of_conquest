@@ -110,3 +110,5 @@ MonoBehaviour:
   weaponPower: 0
   armorDefence: 0
   isDead: 0
+  deadSprite: {fileID: -6959006929257401866, guid: 8ac01a4c6473d11449c3679007be9dc9, type: 3}
+  deathParticles: {fileID: 147159333253552525, guid: e3170ae3cff282144a9fb646dd760557, type: 3}

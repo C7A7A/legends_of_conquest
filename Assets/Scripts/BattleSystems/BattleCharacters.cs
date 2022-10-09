@@ -12,7 +12,9 @@ public class BattleCharacters : MonoBehaviour
     public string characterName;
     public int currentHP, maxHP, currentMana, maxMana, dexterity, defence, weaponPower, armorDefence;
     public bool isDead;
-   
+
+    public Sprite deadSprite;
+    public ParticleSystem deathParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +25,26 @@ public class BattleCharacters : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!isPlayer && isDead) {
+            FadeOutEnemy();
+        }
+    }
+
+    private void FadeOutEnemy() {
+        GetComponent<SpriteRenderer>().color = new Color(
+            Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.r, 1f, 0.3f * Time.deltaTime),
+            Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.g, 0f, 0.3f * Time.deltaTime),
+            Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.b, 0f, 0.3f * Time.deltaTime),
+            Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.a, 0f, 0.3f * Time.deltaTime)
+        );
+
+        if (GetComponent<SpriteRenderer>().color.a == 0) {
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void KillEnemy() {
+        isDead = true;
     }
 
     public bool IsPlayer() {
@@ -58,5 +79,13 @@ public class BattleCharacters : MonoBehaviour
 
     private void AddHP(int amountOfAffect) {
         currentHP += amountOfAffect;
+    }
+
+    public void KillPlayer() {
+        if (deadSprite) {
+            GetComponent<SpriteRenderer>().sprite = deadSprite;
+            Instantiate(deathParticles, transform.position, transform.rotation);
+            isDead = true;
+        }
     }
 }
